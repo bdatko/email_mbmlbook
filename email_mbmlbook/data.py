@@ -35,11 +35,15 @@ class FeatureSet:
 
     def to_pandas(self):
         data = []
-        for dataset, path in self.source.items():
-            for item in attrgetter(path)(self.tree):
-                features = list(map(int, [f.cdata for f in item.FeatureValues.Double]))
-                repliedTo = True if item.get_attribute("Label") else False
-                row = tuple([self.user, dataset] + features + [repliedTo])
-                data.append(row)
+        for user_input in attrgetter(self.base)(self.tree):
+            user = user_input.get_attribute("UserName")
+            for dataset, path in self.source.items():
+                for item in attrgetter(path)(self.tree):
+                    features = list(
+                        map(int, [f.cdata for f in item.FeatureValues.Double])
+                    )
+                    repliedTo = True if item.get_attribute("Label") else False
+                    row = tuple([user, dataset] + features + [repliedTo])
+                    data.append(row)
 
         return pd.DataFrame(data, columns=self.columns)
