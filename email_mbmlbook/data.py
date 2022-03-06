@@ -17,9 +17,12 @@ class FeatureSet:
 
     def __post_init__(self):
         self.tree = untangle.parse(self.xml)
-        self.base = "InputsCollection.Inputs.Inputs..Instances.Instance"
+        self.base = "InputsCollection.Inputs.Inputs"
         self.columns = ["user", "dataset"] + self.features + ["repliedTo"]
-        self.source = {dataset: self.insert(dataset) for dataset in self.datasets}
+        self.source = {
+            dataset: self.base + f".{dataset}.Instances.Instance"
+            for dataset in self.datasets
+        }
 
     @property
     def user(self):
