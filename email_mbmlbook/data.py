@@ -24,15 +24,6 @@ class FeatureSet:
             for dataset in self.datasets
         }
 
-    @property
-    def user(self):
-        return attrgetter("InputsCollection.Inputs.Inputs")(self.tree).get_attribute(
-            "UserName"
-        )
-
-    def insert(self, dataset):
-        return f".{dataset}.".join(self.base.rsplit("..", 1))
-
     def to_pandas(self):
         data = []
         for user_input in attrgetter(self.base)(self.tree):
