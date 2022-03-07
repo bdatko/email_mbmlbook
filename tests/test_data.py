@@ -43,6 +43,22 @@ class TestOneFeatureInputs:
         # Assert
         assert sorted(unique_val) == sorted(expected)
 
+    @pytest.mark.parametrize(
+        "column,expected",
+        [
+            ("user", {"User35CB8E5": 4657}),
+            ("dataset", {"Validation": 2005, "Train": 1995, "Test": 657}),
+            ("ToLine", {0: 3597, 1: 1060}),
+            ("repliedTo", {False: 4517, True: 140}),
+        ],
+    )
+    def test_dist_values(self, column, expected, single):
+        # Arrange
+        # Act
+        dist = single[column].value_counts().to_dict()
+        # Assert
+        assert dist == expected
+
 
 class TestCompoundInputs:
 
@@ -86,3 +102,24 @@ class TestCompoundInputs:
         unique_val = compound[column].unique()
         # Assert
         assert sorted(unique_val) == sorted(expected)
+
+    @pytest.mark.parametrize(
+        "column,expected",
+        [
+            ("user", {"User35CB8E5": 9000}),
+            (
+                "dataset",
+                {"TrainAndValidation": 4500, "Validation": 2255, "Train": 2245},
+            ),
+            ("ToLine", {0: 6630, 1: 2370}),
+            ("FromManager", {0: 8000, 1: 1000}),
+            ("And", {0: 8500, 1: 500}),
+            ("repliedTo", {False: 8336, True: 664}),
+        ],
+    )
+    def test_dist_values(self, column, expected, compound):
+        # Arrange
+        # Act
+        dist = compound[column].value_counts().to_dict()
+        # Assert
+        assert dist == expected
