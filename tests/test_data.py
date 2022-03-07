@@ -6,13 +6,10 @@ class TestOneFeatureInputs:
 
     XML = "https://raw.githubusercontent.com/dotnet/mbmlbook/main/src/4.%20Uncluttering%20Your%20Inbox/Data/OneFeatureInputs.objml"
     DATASETS = ["Train", "Validation", "Test"]
-    FEATURES = ["ToLine"]
 
     @pytest.fixture
     def single(self):
-        one_feature_inputs = email_mbmlbook.FeatureSet(
-            self.XML, self.DATASETS, self.FEATURES
-        )
+        one_feature_inputs = email_mbmlbook.FeatureSet(self.XML, self.DATASETS)
         return one_feature_inputs.to_pandas()
 
     def test_smoke(self, single):
@@ -64,13 +61,10 @@ class TestCompoundInputs:
 
     XML = "https://raw.githubusercontent.com/dotnet/mbmlbook/main/src/4.%20Uncluttering%20Your%20Inbox/Data/CompoundInputs.objml"
     DATASETS = ["Train", "Validation", "TrainAndValidation"]
-    FEATURES = ["ToLine", "FromManager", "And"]
 
     @pytest.fixture
     def compound(self):
-        one_feature_inputs = email_mbmlbook.FeatureSet(
-            self.XML, self.DATASETS, self.FEATURES
-        )
+        one_feature_inputs = email_mbmlbook.FeatureSet(self.XML, self.DATASETS)
         return one_feature_inputs.to_pandas()
 
     def test_smoke(self, compound):
