@@ -19,6 +19,7 @@ class FeatureSet:
         self.base = "InputsCollection.Inputs.Inputs"
         self.features = self._validate_features()
         self.columns = ["user", "dataset"] + self.features + ["repliedTo"]
+        self.categories = self._cardinality()
         self.source = {
             dataset: self.base + f".{dataset}.Instances.Instance"
             for dataset in self.datasets
@@ -37,17 +38,53 @@ class FeatureSet:
 
         return _features[0]
 
+    def _cardinality(self):
+        _maps = {}
+        for user_input in attrgetter(self.base)(self.tree):
+            user = user_input.get_attribute("UserName")
+            _maps[user] = {}
+            for feature in user_input.FeatureSet.Features.get_elements():
+                # _maps[user][feature._name]
+                codex = {
+                    feature_bucket.get_attribute("x:id"): feature_bucket.get_attribute(
+                        "Name"
+                    )
+                    for feature_bucket in feature.get_elements(name="Buckets")[
+                        0
+                    ].get_elements()
+                }
+                _maps[user][feature._name] = codex
+
+        return _maps
+
     def to_pandas(self):
         data = []
         for user_input in attrgetter(self.base)(self.tree):
             user = user_input.get_attribute("UserName")
-            for dataset, path in self.source.items():
-                for item in attrgetter(path)(self.tree):
-                    features = list(
-                        map(int, [f.cdata for f in item.FeatureValues.Double])
-                    )
-                    repliedTo = True if item.get_attribute("Label") else False
-                    row = tuple([user, dataset] + features + [repliedTo])
+            for dataset in self.datasets:
+                for instance in (
+                    user_input.get_elements(dataset)[0]
+                    .get_elements("Instances")[0]
+                    .get_elements()
+                ):
+                    repliedTo = True if instance.get_attribute("Label") else False
+                    row = []
+                    row.extend([user, dataset])
+                    for feature, ref, double in zip(
+                        self.features,
+                        instance.get_elements("FeatureValues")[0].x_key,
+                        instance.get_elements("FeatureValues")[0].Double,
+                    ):
+                        if len(self.categories[user][feature]) > 1:
+                            row.append(
+                                self.categories[user][feature][
+                                    ref.get_attribute("x:idref")
+                                ]
+                            )
+                        elif len(self.categories[user][feature]) == 1:
+                            row.append(int(double.cdata))
+                    row.append(repliedTo)
+                    row = tuple(row)
                     data.append(row)
 
         return pd.DataFrame(data, columns=self.columns)
