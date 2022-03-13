@@ -8,6 +8,8 @@ from operator import attrgetter
 import pandas as pd
 import untangle
 
+from untangle import Element
+
 
 @dataclass
 class FeatureSet:
@@ -57,6 +59,32 @@ class FeatureSet:
 
         return _maps
 
+    def _parse_values(self, user: str, instance: Element) -> list:
+        """
+        Parse values from an instance
+        when len(instance.get_elements()) == len(features)
+        """
+        values = []
+        for feature, ref, double in zip(
+            self.features,
+            instance.get_elements("FeatureValues")[0].x_key,
+            instance.get_elements("FeatureValues")[0].Double,
+        ):
+            if len(self.categories[user][feature]) > 1:
+                values.append(
+                    self.categories[user][feature][ref.get_attribute("x:idref")]
+                )
+            elif len(self.categories[user][feature]) == 1:
+                values.append(int(double.cdata))
+
+        return values
+
+    def _parse_missing_values():
+        pass
+
+    def _parse_list_values():
+        pass
+
     def to_pandas(self):
         data = []
         for user_input in attrgetter(self.base)(self.tree):
@@ -70,19 +98,8 @@ class FeatureSet:
                     repliedTo = True if instance.get_attribute("Label") else False
                     row = []
                     row.extend([user, dataset])
-                    for feature, ref, double in zip(
-                        self.features,
-                        instance.get_elements("FeatureValues")[0].x_key,
-                        instance.get_elements("FeatureValues")[0].Double,
-                    ):
-                        if len(self.categories[user][feature]) > 1:
-                            row.append(
-                                self.categories[user][feature][
-                                    ref.get_attribute("x:idref")
-                                ]
-                            )
-                        elif len(self.categories[user][feature]) == 1:
-                            row.append(int(double.cdata))
+                    tmp = self._parse_values(user, instance)
+                    row.extend(tmp)
                     row.append(repliedTo)
                     row = tuple(row)
                     data.append(row)
