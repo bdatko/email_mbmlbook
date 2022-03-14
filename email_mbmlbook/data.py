@@ -65,8 +65,8 @@ class FeatureSet:
         return _maps
 
     def _get_value(
-        self, user: str, feature: str, ref: str, double: Union[int, float]
-    ) -> Union[str, float, int]:
+        self, user: str, feature: str, ref: str, double: float
+    ) -> Union[str, float]:
         """
         Returns either the double or mapped ref after determining if the feature
         has a boolan or categorical (cat > 2) domain
@@ -92,7 +92,7 @@ class FeatureSet:
                     self.categories[user][feature][ref.get_attribute("x:idref")]
                 )
             elif len(self.categories[user][feature]) == 1:
-                values.append(int(double.cdata))
+                values.append(float(double.cdata))
 
         return values
 
@@ -132,7 +132,7 @@ class FeatureSet:
         multiples = []
         for feature, ref, double in zip_longest(it_f, refs, it_d):
             if not self._check_pos_float(double):
-                values.append(self._get_value(user, feature, ref, int(double)))
+                values.append(self._get_value(user, feature, ref, float(double)))
                 continue
 
             if self._check_pos_float(double):
