@@ -18,6 +18,7 @@ from untangle import Element
 class FeatureSet:
     xml: str
     datasets: list
+    validate_features: bool = True
 
     def __post_init__(self):
         self.tree = untangle.parse(self.xml)
@@ -38,8 +39,9 @@ class FeatureSet:
             ]
             _features.append(features)
 
-        if any(element != _features[0] for element in _features):
-            raise ValueError("FeatureSet are different accross users")
+        if self.validate_features:
+            if any(element != _features[0] for element in _features):
+                raise ValueError("FeatureSet are different accross users")
 
         return _features[0]
 
