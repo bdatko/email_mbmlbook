@@ -362,7 +362,7 @@ class TestOfflineInputs:
             ),
             ("SubjectPrefix", ["no prefix", "re", "Other", "fw"]),
             ("Sender", 3397),
-            ("Recipient", 2410),
+            ("Recipient", 9484),
             ("repliedTo", [False, True]),
         ],
     )
@@ -447,8 +447,8 @@ class TestOfflineInputs:
                 {"no prefix": 13623, "re": 13312, "Other": 198, "fw": 809},
             ),
             ("Sender", 3397),
-            ("Recipient", 2410),
-            ("repliedTo", {False: 25145, True: 2173}),
+            ("Recipient", 9484),
+            ("repliedTo", {False: 25766, True: 2176}),
         ],
     )
     def test_dist_values(self, column, expected, offline):
