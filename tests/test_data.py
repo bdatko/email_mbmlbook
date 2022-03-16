@@ -362,7 +362,7 @@ class TestOfflineInputs:
             ),
             ("SubjectPrefix", ["no prefix", "re", "Other", "fw"]),
             ("Sender", 3397),
-            ("Recipient", 9484),
+            ("Recipient", 8216),
             ("repliedTo", [False, True]),
         ],
     )
@@ -447,7 +447,7 @@ class TestOfflineInputs:
                 {"no prefix": 13623, "re": 13312, "Other": 198, "fw": 809},
             ),
             ("Sender", 3397),
-            ("Recipient", 9484),
+            ("Recipient", 8216),
             ("repliedTo", {False: 25766, True: 2176}),
         ],
     )
@@ -613,7 +613,7 @@ class TestWithRecipient:
             ),
             ("SubjectPrefix", ["no prefix", "re", "Other", "fw"]),
             ("Sender", 3397),
-            ("Recipient", 9484),
+            ("Recipient", 8216),
             ("repliedTo", [False, True]),
         ],
     )
@@ -698,7 +698,7 @@ class TestWithRecipient:
                 {"no prefix": 13623, "re": 13312, "Other": 198, "fw": 809},
             ),
             ("Sender", 3397),
-            ("Recipient", 9484),
+            ("Recipient", 8216),
             ("repliedTo", {False: 25766, True: 2176}),
         ],
     )
