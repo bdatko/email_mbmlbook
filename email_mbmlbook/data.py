@@ -140,7 +140,7 @@ class FeatureSet:
                 if self._check_pos_float(it_d.peek(1)):
                     it_f.prepend(feature)
                 else:
-                    values.append(";".join(multiples))
+                    values.append(";".join(sorted(multiples)))
                     multiples = []
 
         return values
