@@ -12,13 +12,14 @@ import pandas as pd
 import untangle
 from more_itertools import peekable
 from untangle import Element
+from typing import Optional
 
 
 @dataclass
 class FeatureSet:
     xml: str
     datasets: list
-    validate_features: bool = True
+    user_feature_set: Optional[str] = None
 
     def __post_init__(self):
         self.tree = untangle.parse(self.xml)
@@ -39,7 +40,7 @@ class FeatureSet:
             ]
             _features.append(features)
 
-        if self.validate_features:
+        if self.user_feature_set is None:
             if any(element != _features[0] for element in _features):
                 raise ValueError("FeatureSet are different accross users")
 
@@ -61,6 +62,12 @@ class FeatureSet:
                     ].get_elements()
                 }
                 _maps[user][feature._name] = codex
+
+        if self.user_feature_set is not None:
+            for user in set(_maps.keys()) - set([self.user_feature_set]):
+                orig = _maps[user].copy()
+                _maps[user].update(_maps[self.user_feature_set].copy())
+                _maps[user].update(orig)
 
         return _maps
 
