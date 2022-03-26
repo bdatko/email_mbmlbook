@@ -1,3 +1,8 @@
 {
-    "python.pythonPath": "/home/benda/.cache/pypoetry/virtualenvs/email-mbmlbook-b6QNa0J2-py3.10/bin/python"
+    "python.pythonPath": "/home/benda/.cache/pypoetry/virtualenvs/email-mbmlbook-b6QNa0J2-py3.10/bin/python",
+    "python.testing.pytestArgs": [
+        "tests"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true
 }

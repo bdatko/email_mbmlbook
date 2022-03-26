@@ -1,6 +1,16 @@
+[tool.commitizen]
+name = "cz_conventional_commits"
+version = "0.2.0"
+tag_format = "$version"
+annotated_tag = true
+version_files = [
+    "email_mbmlbook/__init__.py:__version__",
+    "pyproject.toml:version"
+]
+
 [tool.poetry]
 name = "email_mbmlbook"
-version = "0.1.0"
+version = "0.2.0"
 description = ""
 authors = ["bdatko <ben.datko@gmail.com>"]
 
