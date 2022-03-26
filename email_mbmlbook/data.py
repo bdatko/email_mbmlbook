@@ -35,9 +35,12 @@ class FeatureSet:
     def _validate_features(self):
         _features = []
         for user_input in attrgetter(self.base)(self.tree):
-            features = [
-                item._name for item in user_input.FeatureSet.Features.get_elements()
-            ]
+            if hasattr(user_input.FeatureSet, "Features"):
+                features = [
+                    item._name for item in user_input.FeatureSet.Features.get_elements()
+                ]
+            else:
+                features = []
             _features.append(features)
 
         if self.user_feature_set is None:
@@ -51,17 +54,18 @@ class FeatureSet:
         for user_input in attrgetter(self.base)(self.tree):
             user = user_input.get_attribute("UserName")
             _maps[user] = {}
-            for feature in user_input.FeatureSet.Features.get_elements():
-                # _maps[user][feature._name]
-                codex = {
-                    feature_bucket.get_attribute("x:id"): feature_bucket.get_attribute(
-                        "Name"
-                    )
-                    for feature_bucket in feature.get_elements(name="Buckets")[
-                        0
-                    ].get_elements()
-                }
-                _maps[user][feature._name] = codex
+            if hasattr(user_input.FeatureSet, "Features"):
+                for feature in user_input.FeatureSet.Features.get_elements():
+                    # _maps[user][feature._name]
+                    codex = {
+                        feature_bucket.get_attribute(
+                            "x:id"
+                        ): feature_bucket.get_attribute("Name")
+                        for feature_bucket in feature.get_elements(name="Buckets")[
+                            0
+                        ].get_elements()
+                    }
+                    _maps[user][feature._name] = codex
 
         if self.user_feature_set is not None:
             for user in set(_maps.keys()) - set([self.user_feature_set]):
