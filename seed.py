@@ -14,7 +14,7 @@ seed02 = email_mbmlbook.FeatureSet(
 )
 
 res01 = seed01.to_pandas()
-res02 = seed01.to_pandas()
+res02 = seed02.to_pandas()
 print(res01.shape)
 print(res02.shape)
 
