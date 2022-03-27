@@ -11,3 +11,6 @@ If you want to parse the data from the book's Github just run the `get_data.py` 
 * Wanted to playaround with parsing XML files, dust off the cobwebbs, level up some skills
 * Will eventually use this data for myself
 * Inspired by [Omniverse's YouTube video titled Model Based Machine Learning with Pyro](https://youtu.be/lmGOQ3SRoPc), the code can be found [here](https://github.com/omniverse-labs/model-based-machine-learning)
+
+## Wiki
+I also have some notes on the [Wiki tab](https://github.com/bdatko/email_mbmlbook/wiki/Notes) 👀 ... shhh it's a secret* 🤐
