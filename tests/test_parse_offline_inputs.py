@@ -7,11 +7,11 @@ class TestOfflineInputs:
 
     XML = "https://raw.githubusercontent.com/dotnet/mbmlbook/main/src/4.%20Uncluttering%20Your%20Inbox/Data/OfflineInputs.objml"
     DATASETS = ["Train", "Validation", "Test"]
+    SOURCE = "data/OfflineInputs_objml.csv"
 
     @pytest.fixture
     def offline(self):
-        offline = email_mbmlbook.FeatureSet(self.XML, self.DATASETS)
-        return offline.to_pandas()
+        return pd.read_csv(self.SOURCE)
 
     def test_smoke(self, offline):
         # Arrange

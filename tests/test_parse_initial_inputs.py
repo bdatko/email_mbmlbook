@@ -7,11 +7,11 @@ class TestInitialInputs:
 
     XML = "https://raw.githubusercontent.com/dotnet/mbmlbook/main/src/4.%20Uncluttering%20Your%20Inbox/Data/InitialInputs.objml"
     DATASETS = ["Train", "Validation", "Test"]
+    SOURCE = "data/InitialInputs_objml.csv"
 
     @pytest.fixture
     def initial(self):
-        initial = email_mbmlbook.FeatureSet(self.XML, self.DATASETS)
-        return initial.to_pandas()
+        return pd.read_csv(self.SOURCE)
 
     def test_smoke(self, initial):
         # Arrange

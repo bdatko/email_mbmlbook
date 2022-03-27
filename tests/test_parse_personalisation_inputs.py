@@ -11,21 +11,11 @@ class TestPersonalisationInputs:
     ]
     user_feature_set_reference = ["User35CB8E5", "User223AECA"]
     DATASETS = ["Train", "Validation", "Test"]
+    SOURCE = "data/PersonalisationInputs_objml.csv"
 
     @pytest.fixture
     def personalisation(self):
-        data = []
-        for xml, user in zip(self.XML, self.user_feature_set_reference):
-            data.append(
-                email_mbmlbook.FeatureSet(
-                    xml, self.DATASETS, user_feature_set=user
-                ).to_pandas()
-            )
-
-        res = pd.concat(data)
-        res.reset_index(inplace=True, drop=True)
-
-        return res
+        return pd.read_csv(self.SOURCE)
 
     def test_smoke(self, personalisation):
         # Arrange

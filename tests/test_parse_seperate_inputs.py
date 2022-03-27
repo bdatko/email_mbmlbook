@@ -7,11 +7,11 @@ class TestSeperateInputs:
 
     XML = "https://raw.githubusercontent.com/dotnet/mbmlbook/main/src/4.%20Uncluttering%20Your%20Inbox/Data/SeparateInputs.objml"
     DATASETS = ["Train", "Validation", "Test"]
+    SOURCE = "data/SeparateInputs_objml.csv"
 
     @pytest.fixture
     def seperate(self):
-        separate = email_mbmlbook.FeatureSet(self.XML, self.DATASETS)
-        return separate.to_pandas()
+        return pd.read_csv(self.SOURCE)
 
     def test_smoke(self, seperate):
         # Arrange

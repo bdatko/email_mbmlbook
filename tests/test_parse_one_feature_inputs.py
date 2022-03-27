@@ -7,11 +7,11 @@ class TestOneFeatureInputs:
 
     XML = "https://raw.githubusercontent.com/dotnet/mbmlbook/main/src/4.%20Uncluttering%20Your%20Inbox/Data/OneFeatureInputs.objml"
     DATASETS = ["Train", "Validation", "Test"]
+    SOURCE = "data/OneFeatureInputs_objml.csv"
 
     @pytest.fixture
     def single(self):
-        one_feature_inputs = email_mbmlbook.FeatureSet(self.XML, self.DATASETS)
-        return one_feature_inputs.to_pandas()
+        return pd.read_csv(self.SOURCE)
 
     def test_smoke(self, single):
         # Arrange

@@ -7,11 +7,11 @@ class TestWithSubjectPrefixInputs:
 
     XML = "https://raw.githubusercontent.com/dotnet/mbmlbook/main/src/4.%20Uncluttering%20Your%20Inbox/Data/WithSubjectPrefixInputs.objml"
     DATASETS = ["Train", "Validation", "Test"]
+    SOURCE = "data/WithSubjectPrefixInputs_objml.csv"
 
     @pytest.fixture
     def with_subject_recipient(self):
-        with_subject_recipient = email_mbmlbook.FeatureSet(self.XML, self.DATASETS)
-        return with_subject_recipient.to_pandas()
+        return pd.read_csv(self.SOURCE)
 
     def test_smoke(self, with_subject_recipient):
         # Arrange

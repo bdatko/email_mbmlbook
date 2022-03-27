@@ -7,11 +7,11 @@ class TestCompoundInputs:
 
     XML = "https://raw.githubusercontent.com/dotnet/mbmlbook/main/src/4.%20Uncluttering%20Your%20Inbox/Data/CompoundInputs.objml"
     DATASETS = ["Train", "Validation", "TrainAndValidation"]
+    SOURCE = "data/CompoundInputs_objml.csv"
 
     @pytest.fixture
     def compound(self):
-        compound = email_mbmlbook.FeatureSet(self.XML, self.DATASETS)
-        return compound.to_pandas()
+        return pd.read_csv(self.SOURCE)
 
     def test_smoke(self, compound):
         # Arrange
