@@ -1,3 +1,13 @@
+## Unreleased
+
+### Refactor
+
+- **initial.py-offline.py-parse_list_values.py-personalisation.py-seed.py-separate.py-with_recipient.py-with_subject_prefix.py**: remove first iterations
+
+### Fix
+
+- **README**: chage file extension of README
+
 ## 0.3.0 (2022-03-26)
 
 ### Feat
