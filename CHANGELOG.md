@@ -1,3 +1,23 @@
+## Unreleased
+
+### Feat
+
+- **email_mbmlbook/__init__.py-email_mbmlbook/source.py**: add constant for which files to parse from the github repo
+- **get_data.py**: add entry point for the project
+- **data/-data/*.csv**: add parsed data
+- **with_subject_prefix.py**: first iteration of parsing WithSubjectPrefixInputs.objml
+- **with_recipient.py**: first iteration parsing WithRecipientInputs.objml
+- **separate.py**: first iteration parsing SeparateInputs.objml
+- **seed.py**: first iteration of parsing Seed[1|2]Inputs.objml
+- **personalisation.py**: first iteration of parsing Personalisation[1|2]Inputs.objml
+- **parse_list_values.py**: first iteration of parsing list values within objml file
+- **offline.py**: first iteratoin of parsing OfflineInputs.objml
+- **CHANGELOG.md**: create change log
+
+### Fix
+
+- **seed.py**: fix copy paste error
+
 ## 0.2.0 (2022-03-26)
 
 ### Fix
